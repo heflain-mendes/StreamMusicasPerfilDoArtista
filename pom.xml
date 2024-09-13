@@ -16,11 +16,16 @@
     </repositories>
 
     <dependencies>
-        <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
         <!-- Mockito -->
@@ -34,7 +39,7 @@
         <dependency>
             <groupId>com.github.heflain-mendes</groupId>
             <artifactId>StreamMusicas</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.8</version>
         </dependency>
     </dependencies>
 
