@@ -47,6 +47,7 @@ public class ArtistaServiceTest {
         when(musicaRepository.getMusicasMaisTocadas("Hiago Moreira", 5))
                 .thenReturn(Optional.empty());
 
+
         //When : utilização do serviço buscando pelo nome do artista
         Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
         Optional<List<IMusica>> musicas = artistaService.getMusica("Hiago Moreira");
@@ -106,6 +107,18 @@ public class ArtistaServiceTest {
         //Then : verifica a chamada no artista service
         assertFalse(musicasMaisTocadas.isPresent());
         verify(musicaRepository, times(1)).getMusicasMaisTocadas("Hiago Moreira", 5);
+    }
+
+    @Test
+    public void verificaAtualizacaoReproducaoTest(){
+        //Given: Musica mockada
+        IMusica musicaMocked = mock(IMusica.class);
+
+        //When : utilização do serviço buscando pelo nome do artista
+        artistaService.atualizarEstatisticasReproducao(musicaMocked);
+
+        //Then : verifica a chamada no artista service
+        verify(musicaRepository, times(1)).atualizarEstatisticasReproducao(musicaMocked);
     }
 
 }

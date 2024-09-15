@@ -35,7 +35,6 @@ public class ArtistaService implements IArtistaService {
 
     @Override
     public void atualizarEstatisticasReproducao(IMusica musica) {
-        musica.getQtdVezesReproduzidas();
-        musica.incrementaContagemReproducao();
+        this.musicaRepository.atualizarEstatisticasReproducao(musica);
     }
 }
