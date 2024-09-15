@@ -15,11 +15,10 @@ public class ArtistaService implements IArtistaService {
     private IArtistaRepository artistaRepository;
     private IMusicaRepository  musicaRepository;
 
-    public ArtistaService(IArtistaRepository artistaRepository) {
+    public ArtistaService() {
         this.artistaRepository = ArtistaRepository.getArtistaRepository();
         this.musicaRepository = MusicaRepository.getMusicaRepository();
     }
-
 
     @Override
     public Optional<List<IMusica>> getMusicasMaisTocadas(String nomeArtista) {
