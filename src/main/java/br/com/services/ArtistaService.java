@@ -4,8 +4,6 @@ import br.com.interfaces.model.IMusica;
 import br.com.interfaces.repository.IArtistaRepository;
 import br.com.interfaces.repository.IMusicaRepository;
 import br.com.interfaces.services.IArtistaService;
-import br.com.repositories.ArtistaRepository;
-import br.com.repositories.MusicaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +13,9 @@ public class ArtistaService implements IArtistaService {
     private IArtistaRepository artistaRepository;
     private IMusicaRepository  musicaRepository;
 
-    public ArtistaService() {
-        this.artistaRepository = ArtistaRepository.getArtistaRepository();
-        this.musicaRepository = MusicaRepository.getMusicaRepository();
+    public ArtistaService(IArtistaRepository artistaRepository, IMusicaRepository musicaRepository) {
+        this.artistaRepository = artistaRepository;
+        this.musicaRepository = musicaRepository;
     }
 
     @Override
