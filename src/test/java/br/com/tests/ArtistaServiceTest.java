@@ -119,10 +119,8 @@ public class ArtistaServiceTest {
     @Test
     public void verificaRetornoMusicasMaisTocadas(){
         //Given
-        List<IMusica> musicaRetono = new ArrayList<IMusica>();
-        musicaRetono.add(musicaMocked);
         when(musicaRepository.getMusicasMaisTocadas("Hiago Moreira", 5))
-                .thenReturn(Optional.ofNullable(musicaRetono));
+                .thenReturn(Optional.empty());
 
         //When
         Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
