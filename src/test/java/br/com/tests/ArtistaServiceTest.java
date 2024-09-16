@@ -105,28 +105,30 @@ public class ArtistaServiceTest {
         //Given
         List<IMusica> musicaRetono = new ArrayList<IMusica>();
         musicaRetono.add(musicaMocked);
-        when(musicaRepository.getMusicasMaisTocadas("Hiago Moreira", 5))
-                .thenReturn(Optional.ofNullable(musicaRetono));
+        when(musicaRepository.getMusicas("Hiago Moreira"))
+                .thenReturn(Optional.of(musicaRetono));
 
         //When
-        Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
+        Optional<List<IMusica>> listaMusica = artistaService.getMusica("Hiago Moreira");
 
         //Then
-        assertFalse(biografia.isPresent());
-        verify(artistaRepository, times(1)).getBiografia("Hiago Moreira");
+        assertTrue(listaMusica.isPresent());
+        verify(musicaRepository, times(1)).getMusicas("Hiago Moreira");
     }
 
     @Test
     public void verificaRetornoMusicasMaisTocadas(){
         //Given
+        List<IMusica> musicaRetorno = new ArrayList<IMusica>();
+        musicaRetorno.add(musicaMocked);
         when(musicaRepository.getMusicasMaisTocadas("Hiago Moreira", 5))
-                .thenReturn(Optional.empty());
+                .thenReturn(Optional.of(musicaRetorno));
 
         //When
         Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
 
         //Then
-        assertFalse(musicasMaisTocadas.isPresent());
+        assertTrue(musicasMaisTocadas.isPresent());
         verify(musicaRepository, times(1)).getMusicasMaisTocadas("Hiago Moreira", 5);
     }
 
