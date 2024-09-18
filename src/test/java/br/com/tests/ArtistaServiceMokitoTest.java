@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class ArtistaServiceTest {
+public class ArtistaServiceMokitoTest {
 
     @Mock
     private IArtistaRepository artistaRepository;
@@ -70,7 +70,7 @@ public class ArtistaServiceTest {
 
         //When
         Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
-        Optional<List<IMusica>> musicas = artistaService.getMusica("Hiago Moreira");
+        Optional<List<IMusica>> musicas = artistaService.getMusicas("Hiago Moreira");
         Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
 
         //Then
@@ -109,7 +109,7 @@ public class ArtistaServiceTest {
                 .thenReturn(Optional.of(musicaRetono));
 
         //When
-        Optional<List<IMusica>> listaMusica = artistaService.getMusica("Hiago Moreira");
+        Optional<List<IMusica>> listaMusica = artistaService.getMusicas("Hiago Moreira");
 
         //Then
         assertTrue(listaMusica.isPresent());

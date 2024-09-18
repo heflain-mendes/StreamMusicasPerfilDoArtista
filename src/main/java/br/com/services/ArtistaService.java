@@ -24,7 +24,7 @@ public class ArtistaService implements IArtistaService {
     }
 
     @Override
-    public Optional<List<IMusica>> getMusica(String nomeArtista) {
+    public Optional<List<IMusica>> getMusicas(String nomeArtista) {
         return this.musicaRepository.getMusicas(nomeArtista);
     }
 
