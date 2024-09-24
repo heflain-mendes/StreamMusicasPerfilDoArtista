@@ -19,22 +19,38 @@ public class ArtistaService implements IArtistaService {
     }
 
     @Override
-    public Optional<List<IMusica>> getMusicasMaisTocadas(String nomeArtista) {
-        return this.musicaRepository.getMusicasMaisTocadas(nomeArtista, 5);
+    public Optional<List<IMusica>> getMusicasMaisTocadas(String nomeArtista){
+        try{
+            return this.musicaRepository.getMusicasMaisTocadas(nomeArtista, 5);
+        }catch (Exception ex){
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<List<IMusica>> getMusicas(String nomeArtista) {
-        return this.musicaRepository.getMusicas(nomeArtista);
+        try{
+            return this.musicaRepository.getMusicas(nomeArtista);
+        }catch (Exception ex){
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<String> getBiografia(String nomeArtista) {
-        return this.artistaRepository.getBiografia(nomeArtista);
+        try{
+            return this.artistaRepository.getBiografia(nomeArtista);
+        }catch (Exception ex){
+            return Optional.empty();
+        }
     }
 
     @Override
     public void atualizarEstatisticasReproducao(IMusica musica) {
-        this.musicaRepository.atualizarEstatisticasReproducao(musica);
+        try{
+            this.musicaRepository.atualizarEstatisticasReproducao(musica);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

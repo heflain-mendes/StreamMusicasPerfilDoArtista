@@ -56,27 +56,49 @@ public class ArtistaServiceMokitoTest {
     }
 
     @Test
-    public void verificaRetornoSeNaoExistirArtista(){
-        //Given
+    public void verificarRetornoSeNaoExistirArtista() throws Exception {
+        //When
         when(artistaRepository.getBiografia("Hiago Moreira"))
-                .thenReturn(Optional.empty());
+            .thenReturn(Optional.empty());
 
         when(musicaRepository.getMusicas("Hiago Moreira"))
-                .thenReturn(Optional.empty());
+            .thenReturn(Optional.empty());
 
         when(musicaRepository.getMusicasMaisTocadas("Hiago Moreira", 5))
-                .thenReturn(Optional.empty());
+            .thenReturn(Optional.empty());
+
+        //Given
+        Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
+        Optional<List<IMusica>> musicas = artistaService.getMusicas("Hiago Moreira");
+        Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
 
 
+        //Then
+        assertFalse(biografia.isPresent(), "Artista está presente");
+        assertFalse(musicas.isPresent(), "Musica está presente");
+        assertFalse(musicasMaisTocadas.isPresent(), "Musica false está presente");
+
+        verify(artistaRepository, times(1)).getBiografia("Hiago Moreira");
+        verify(musicaRepository, times(1)).getMusicas("Hiago Moreira");
+        verify(musicaRepository, times(1)).getMusicasMaisTocadas("Hiago Moreira", 5);
+    }
+
+    @Test
+    public void verificarRetornoSeOcorrerErros() throws Exception {
         //When
+        doThrow(new Exception()).when(artistaRepository).getBiografia("Hiago Moreira");
+        doThrow(new Exception()).when(musicaRepository).getMusicas("Hiago Moreira");
+        doThrow(new Exception()).when(musicaRepository).getMusicasMaisTocadas("Hiago Moreira", 5);
+
+        //Given
         Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
         Optional<List<IMusica>> musicas = artistaService.getMusicas("Hiago Moreira");
         Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
 
         //Then
-        assertFalse(biografia.isPresent());
-        assertFalse(musicas.isPresent());
-        assertFalse(musicasMaisTocadas.isPresent());
+        assertFalse(biografia.isPresent(), "Artista está presente");
+        assertFalse(musicas.isPresent(), "Musica está presente");
+        assertFalse(musicasMaisTocadas.isPresent(), "Musica false está presente");
 
         verify(artistaRepository, times(1)).getBiografia("Hiago Moreira");
         verify(musicaRepository, times(1)).getMusicas("Hiago Moreira");
@@ -85,7 +107,7 @@ public class ArtistaServiceMokitoTest {
 
 
     @Test
-    public void verificaRetornoBibliografiaTest(){
+    public void verificarRetornoBibliografiaTest() throws Exception {
         //Given
         when(artistaRepository.getBiografia("Hiago Moreira"))
                 .thenReturn(Optional.ofNullable(artistaMocked.getBiografia()));
@@ -101,7 +123,7 @@ public class ArtistaServiceMokitoTest {
 
 
     @Test
-    public void verificaRetornoMusicas(){
+    public void verificarRetornoMusicas() throws Exception {
         //Given
         List<IMusica> musicaRetono = new ArrayList<IMusica>();
         musicaRetono.add(musicaMocked);
@@ -117,7 +139,7 @@ public class ArtistaServiceMokitoTest {
     }
 
     @Test
-    public void verificaRetornoMusicasMaisTocadas(){
+    public void verificarRetornoMusicasMaisTocadas() throws Exception {
         //Given
         List<IMusica> musicaRetorno = new ArrayList<IMusica>();
         musicaRetorno.add(musicaMocked);
@@ -133,12 +155,11 @@ public class ArtistaServiceMokitoTest {
     }
 
     @Test
-    public void verificaAtualizacaoReproducaoTest(){
+    public void verificarAtualizacaoReproducaoTest() throws Exception {
         //When
         artistaService.atualizarEstatisticasReproducao(musicaMocked);
 
         //Then
         verify(musicaRepository, times(1)).atualizarEstatisticasReproducao(musicaMocked);
     }
-
 }
