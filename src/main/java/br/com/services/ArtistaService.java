@@ -46,11 +46,7 @@ public class ArtistaService implements IArtistaService {
     }
 
     @Override
-    public void atualizarEstatisticasReproducao(IMusica musica) {
-        try{
-            this.musicaRepository.atualizarEstatisticasReproducao(musica);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+    public void atualizarEstatisticasReproducao(IMusica musica) throws Exception {
+        this.musicaRepository.atualizarEstatisticasReproducao(musica);
     }
 }

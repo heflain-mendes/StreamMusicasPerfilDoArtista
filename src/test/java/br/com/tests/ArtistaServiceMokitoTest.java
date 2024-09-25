@@ -58,19 +58,19 @@ public class ArtistaServiceMokitoTest {
     @Test
     public void verificarRetornoSeNaoExistirArtista() throws Exception {
         //When
-        when(artistaRepository.getBiografia("Hiago Moreira"))
+        when(artistaRepository.getBiografia(artistaMocked.getNome()))
             .thenReturn(Optional.empty());
 
-        when(musicaRepository.getMusicas("Hiago Moreira"))
+        when(musicaRepository.getMusicas(artistaMocked.getNome()))
             .thenReturn(Optional.empty());
 
-        when(musicaRepository.getMusicasMaisTocadas("Hiago Moreira", 5))
+        when(musicaRepository.getMusicasMaisTocadas(artistaMocked.getNome(), 5))
             .thenReturn(Optional.empty());
 
         //Given
-        Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
-        Optional<List<IMusica>> musicas = artistaService.getMusicas("Hiago Moreira");
-        Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
+        Optional<String> biografia = artistaService.getBiografia(artistaMocked.getNome());
+        Optional<List<IMusica>> musicas = artistaService.getMusicas(artistaMocked.getNome());
+        Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas(artistaMocked.getNome());
 
 
         //Then
@@ -78,47 +78,47 @@ public class ArtistaServiceMokitoTest {
         assertFalse(musicas.isPresent(), "Musica está presente");
         assertFalse(musicasMaisTocadas.isPresent(), "Musica false está presente");
 
-        verify(artistaRepository, times(1)).getBiografia("Hiago Moreira");
-        verify(musicaRepository, times(1)).getMusicas("Hiago Moreira");
-        verify(musicaRepository, times(1)).getMusicasMaisTocadas("Hiago Moreira", 5);
+        verify(artistaRepository, times(1)).getBiografia(artistaMocked.getNome());
+        verify(musicaRepository, times(1)).getMusicas(artistaMocked.getNome());
+        verify(musicaRepository, times(1)).getMusicasMaisTocadas(artistaMocked.getNome(), 5);
     }
 
     @Test
     public void verificarRetornoSeOcorrerErros() throws Exception {
         //When
-        doThrow(new Exception()).when(artistaRepository).getBiografia("Hiago Moreira");
-        doThrow(new Exception()).when(musicaRepository).getMusicas("Hiago Moreira");
-        doThrow(new Exception()).when(musicaRepository).getMusicasMaisTocadas("Hiago Moreira", 5);
+        doThrow(new Exception()).when(artistaRepository).getBiografia(artistaMocked.getNome());
+        doThrow(new Exception()).when(musicaRepository).getMusicas(artistaMocked.getNome());
+        doThrow(new Exception()).when(musicaRepository).getMusicasMaisTocadas(artistaMocked.getNome(), 5);
 
         //Given
-        Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
-        Optional<List<IMusica>> musicas = artistaService.getMusicas("Hiago Moreira");
-        Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
+        Optional<String> biografia = artistaService.getBiografia(artistaMocked.getNome());
+        Optional<List<IMusica>> musicas = artistaService.getMusicas(artistaMocked.getNome());
+        Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas(artistaMocked.getNome());
 
         //Then
         assertFalse(biografia.isPresent(), "Artista está presente");
         assertFalse(musicas.isPresent(), "Musica está presente");
         assertFalse(musicasMaisTocadas.isPresent(), "Musica false está presente");
 
-        verify(artistaRepository, times(1)).getBiografia("Hiago Moreira");
-        verify(musicaRepository, times(1)).getMusicas("Hiago Moreira");
-        verify(musicaRepository, times(1)).getMusicasMaisTocadas("Hiago Moreira", 5);
+        verify(artistaRepository, times(1)).getBiografia(artistaMocked.getNome());
+        verify(musicaRepository, times(1)).getMusicas(artistaMocked.getNome());
+        verify(musicaRepository, times(1)).getMusicasMaisTocadas(artistaMocked.getNome(), 5);
     }
 
 
     @Test
     public void verificarRetornoBibliografiaTest() throws Exception {
         //Given
-        when(artistaRepository.getBiografia("Hiago Moreira"))
+        when(artistaRepository.getBiografia(artistaMocked.getNome()))
                 .thenReturn(Optional.ofNullable(artistaMocked.getBiografia()));
 
         //When
-        Optional<String> biografia = artistaService.getBiografia("Hiago Moreira");
+        Optional<String> biografia = artistaService.getBiografia(artistaMocked.getNome());
 
         //Then
         assertTrue(biografia.isPresent());
-        assertEquals("Um cara legal !", biografia.get());
-        verify(artistaRepository, times(1)).getBiografia("Hiago Moreira");
+        assertEquals(artistaMocked.getBiografia(), biografia.get());
+        verify(artistaRepository, times(1)).getBiografia(artistaMocked.getNome());
     }
 
 
@@ -127,15 +127,15 @@ public class ArtistaServiceMokitoTest {
         //Given
         List<IMusica> musicaRetono = new ArrayList<IMusica>();
         musicaRetono.add(musicaMocked);
-        when(musicaRepository.getMusicas("Hiago Moreira"))
+        when(musicaRepository.getMusicas(artistaMocked.getNome()))
                 .thenReturn(Optional.of(musicaRetono));
 
         //When
-        Optional<List<IMusica>> listaMusica = artistaService.getMusicas("Hiago Moreira");
+        Optional<List<IMusica>> listaMusica = artistaService.getMusicas(artistaMocked.getNome());
 
         //Then
         assertTrue(listaMusica.isPresent());
-        verify(musicaRepository, times(1)).getMusicas("Hiago Moreira");
+        verify(musicaRepository, times(1)).getMusicas(artistaMocked.getNome());
     }
 
     @Test
@@ -143,21 +143,44 @@ public class ArtistaServiceMokitoTest {
         //Given
         List<IMusica> musicaRetorno = new ArrayList<IMusica>();
         musicaRetorno.add(musicaMocked);
-        when(musicaRepository.getMusicasMaisTocadas("Hiago Moreira", 5))
+        when(musicaRepository.getMusicasMaisTocadas(artistaMocked.getNome(), 5))
                 .thenReturn(Optional.of(musicaRetorno));
 
         //When
-        Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas("Hiago Moreira");
+        Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas(artistaMocked.getNome());
 
         //Then
         assertTrue(musicasMaisTocadas.isPresent());
-        verify(musicaRepository, times(1)).getMusicasMaisTocadas("Hiago Moreira", 5);
+        verify(musicaRepository, times(1)).getMusicasMaisTocadas(artistaMocked.getNome(), 5);
     }
 
     @Test
-    public void verificarAtualizacaoReproducaoTest() throws Exception {
+    public void verificarAtualizacaoReproducaoArtistaInexistenteTest() throws Exception {
+        doThrow(new Exception("Artista " + musicaMocked.getArtista() + " não existe na plataforma"))
+            .when(musicaRepository).atualizarEstatisticasReproducao(musicaMocked);
+
         //When
-        artistaService.atualizarEstatisticasReproducao(musicaMocked);
+        Exception exception = assertThrows(Exception.class , () ->{
+            artistaService.atualizarEstatisticasReproducao(musicaMocked);
+        });
+
+        assertEquals("Artista " + musicaMocked.getArtista() + " não existe na plataforma", exception.getMessage());
+
+        //Then
+        verify(musicaRepository, times(1)).atualizarEstatisticasReproducao(musicaMocked);
+    }
+
+    @Test
+    public void verificarAtualizacaoReproducaoErrorComBancoDadosTest() throws Exception {
+        doThrow(new Exception("ReproducaoService não está disponível"))
+            .when(musicaRepository).atualizarEstatisticasReproducao(musicaMocked);
+
+        //When
+        Exception exception = assertThrows(Exception.class , () ->{
+            artistaService.atualizarEstatisticasReproducao(musicaMocked);
+        });
+
+        assertEquals("ReproducaoService não está disponível", exception.getMessage());
 
         //Then
         verify(musicaRepository, times(1)).atualizarEstatisticasReproducao(musicaMocked);

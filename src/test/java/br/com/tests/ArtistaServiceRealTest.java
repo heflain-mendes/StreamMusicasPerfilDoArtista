@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class ArtistaServiceRealTest {
     public static IArtistaService artistaService;
@@ -57,16 +58,21 @@ public class ArtistaServiceRealTest {
     }
 
     @Test
-    public void verificaAtualizacaoReproducaoTest() {
+    public void verificaAtualizacaoReproducaoTest() throws Exception{
         var musica = new Musica("Numb", "Linkin Park", "Nu Metal", 3.5);
 
         artistaService.atualizarEstatisticasReproducao(musica);
     }
 
     @Test
-    public void verificaAtualizacaoReproducaoMusicaInesistenteTest() {
+    public void verificarAtualizacaoReproducaoArtistaInexistenteTest(){
         var musica = new Musica("Hiago Moreira", "Linkin Park", "Nu Metal", 3.5);
 
-        artistaService.atualizarEstatisticasReproducao(musica);
+        //When
+        Exception exception = assertThrows(Exception.class , () ->{
+            artistaService.atualizarEstatisticasReproducao(musica);
+        });
+
+        assertEquals("Artista " + musica.getArtista() + " não existe na plataforma", exception.getMessage());
     }
 }
