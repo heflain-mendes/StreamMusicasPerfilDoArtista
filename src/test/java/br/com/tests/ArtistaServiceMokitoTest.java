@@ -57,7 +57,7 @@ public class ArtistaServiceMokitoTest {
 
     @Test
     public void verificarRetornoSeNaoExistirArtista() throws Exception {
-        //When
+        //Given
         when(artistaRepository.getBiografia(artistaMocked.getNome()))
             .thenReturn(Optional.empty());
 
@@ -67,7 +67,7 @@ public class ArtistaServiceMokitoTest {
         when(musicaRepository.getMusicasMaisTocadas(artistaMocked.getNome(), 5))
             .thenReturn(Optional.empty());
 
-        //Given
+        //When
         Optional<String> biografia = artistaService.getBiografia(artistaMocked.getNome());
         Optional<List<IMusica>> musicas = artistaService.getMusicas(artistaMocked.getNome());
         Optional<List<IMusica>> musicasMaisTocadas = artistaService.getMusicasMaisTocadas(artistaMocked.getNome());
@@ -156,6 +156,7 @@ public class ArtistaServiceMokitoTest {
 
     @Test
     public void verificarAtualizacaoReproducaoArtistaInexistenteTest() throws Exception {
+        //Given
         doThrow(new Exception("Artista " + musicaMocked.getArtista() + " não existe na plataforma"))
             .when(musicaRepository).atualizarEstatisticasReproducao(musicaMocked);
 
@@ -172,6 +173,7 @@ public class ArtistaServiceMokitoTest {
 
     @Test
     public void verificarAtualizacaoReproducaoErrorComBancoDadosTest() throws Exception {
+        //Given
         doThrow(new Exception("ReproducaoService não está disponível"))
             .when(musicaRepository).atualizarEstatisticasReproducao(musicaMocked);
 
